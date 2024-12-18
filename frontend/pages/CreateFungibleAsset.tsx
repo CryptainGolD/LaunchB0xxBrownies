@@ -45,8 +45,7 @@ export function CreateFungibleAsset() {
   // Local Ref
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const disableCreateAssetButton =
-    !name || !symbol || !maxSupply || !decimal || !projectURL || !maxMintPerAccount || !account || isUploading;
+  const disableCreateAssetButton = !name || !symbol || !maxSupply || !decimal || !projectURL || !account || isUploading;
 
   // On create asset button clicked
   const onCreateAsset = async () => {

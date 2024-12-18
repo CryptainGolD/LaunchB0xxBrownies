@@ -13,7 +13,7 @@ export const mintAsset = (args: MintAssetArguments): InputTransactionData => {
   const { assetType, amount, decimals } = args;
   return {
     data: {
-      function: `${MODULE_ADDRESS}::launchpad::mint_fa`,
+      function: `${MODULE_ADDRESS}::LaunchB0xx::mint_fa`,
       typeArguments: [],
       functionArguments: [assetType, convertAmountFromHumanReadableToOnChain(amount, decimals)],
     },

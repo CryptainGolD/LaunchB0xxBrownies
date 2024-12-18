@@ -9,7 +9,7 @@ type GetMintEnabledArguments = {
 export const getMintEnabled = async ({ fa_address }: GetMintEnabledArguments) => {
   const mintEnabled = await aptosClient().view<[boolean]>({
     payload: {
-      function: `${AccountAddress.from(MODULE_ADDRESS)}::launchpad::is_mint_enabled`,
+      function: `${AccountAddress.from(MODULE_ADDRESS)}::LaunchB0xx::is_mint_enabled`,
       functionArguments: [fa_address],
     },
   });

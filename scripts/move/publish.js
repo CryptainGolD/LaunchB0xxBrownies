@@ -38,10 +38,10 @@ async function publish() {
   move
     .createObjectAndPublishPackage({
       packageDirectoryPath: "contract",
-      addressName: "admin",
+      addressName: "lb_admin",
       namedAddresses: {
         // Publish module to account address
-        admin: process.env.VITE_MODULE_PUBLISHER_ACCOUNT_ADDRESS,
+        lb_admin: process.env.VITE_MODULE_PUBLISHER_ACCOUNT_ADDRESS,
         // This is the address you want to use to create fungible asset with, e.g. an address in Petra so you can create fungible asset in UI using Petra
         initial_creator_addr: process.env.VITE_FA_CREATOR_ADDRESS,
       },

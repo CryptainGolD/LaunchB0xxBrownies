@@ -5,7 +5,7 @@ import { MODULE_ADDRESS } from "@/constants";
 export const getRegistry = async () => {
   const registry = await aptosClient().view<[[{ inner: string }]]>({
     payload: {
-      function: `${AccountAddress.from(MODULE_ADDRESS)}::launchpad::get_registry`,
+      function: `${AccountAddress.from(MODULE_ADDRESS)}::LaunchB0xx::get_registry`,
     },
   });
   return registry[0];

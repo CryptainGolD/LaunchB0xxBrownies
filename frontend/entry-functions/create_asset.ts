@@ -24,7 +24,7 @@ export const createAsset = (args: CreateAssetArguments): InputTransactionData =>
     args;
   return {
     data: {
-      function: `${MODULE_ADDRESS}::launchpad::create_fa`,
+      function: `${MODULE_ADDRESS}::LaunchB0xx::create_fa`,
       typeArguments: [],
       functionArguments: [
         convertAmountFromHumanReadableToOnChain(maxSupply, decimal),

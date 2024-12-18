@@ -2,7 +2,6 @@ import { HeroSection } from "./components/HeroSection";
 import { StatsSection } from "./components/StatsSection";
 import { OurStorySection } from "./components/OurStorySection";
 import { useGetAssetData } from "../../hooks/useGetAssetData";
-import { Socials } from "./components/Socials";
 import { ConnectWalletAlert } from "./components/ConnectWalletAlert";
 import { Header } from "@/components/Header";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
@@ -39,7 +38,7 @@ export function Mint() {
 
         <footer className="footer-container px-4 pb-6 w-full max-w-screen-xl mx-auto mt-6 md:mt-16 flex items-center justify-between">
           <p>{data?.asset.name}</p>
-          <Socials />
+          {/* <Socials /> */}
         </footer>
       </div>
     </>

@@ -10,7 +10,7 @@ type GetUserMintBalanceArguments = {
 export const getUserMintBalance = async ({ fa_address, user_address }: GetUserMintBalanceArguments) => {
   const userMintedAmount = await aptosClient().view<[string]>({
     payload: {
-      function: `${AccountAddress.from(MODULE_ADDRESS)}::launchpad::get_mint_balance`,
+      function: `${AccountAddress.from(MODULE_ADDRESS)}::LaunchB0xx::get_mint_balance`,
       functionArguments: [fa_address, user_address],
     },
   });

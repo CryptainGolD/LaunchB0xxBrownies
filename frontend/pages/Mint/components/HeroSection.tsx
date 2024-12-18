@@ -8,7 +8,6 @@ import { Image } from "@/components/ui/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Socials } from "@/pages/Mint/components/Socials";
 // Internal hooks
 import { useGetAssetData } from "../../../hooks/useGetAssetData";
 // Internal utils
@@ -77,7 +76,6 @@ export const HeroSection: React.FC<HeroSectionProps> = () => {
       />
       <div className="basis-4/5 flex flex-col gap-4">
         <h1 className="title-md">{asset?.name ?? config.defaultAsset?.name}</h1>
-        <Socials />
 
         <Card>
           <CardContent
