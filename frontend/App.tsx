@@ -8,9 +8,9 @@ import { IS_DEV } from "./constants";
 
 function Layout() {
   return (
-    <div style={{ backgroundColor: "#111a2e" }}>
+    <>
       <Outlet />
-    </div>
+    </>
   );
 }
 
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      {IS_DEV && <TopBanner />}
+    {IS_DEV && <TopBanner />}
       <RouterProvider router={router} />
     </>
   );

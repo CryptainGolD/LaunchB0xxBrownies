@@ -1,10 +1,10 @@
 [package]
-name = "fungible_asset_launchpad"
+name = "LaunchB0xx_FungibleTokenMinter"
 version = "1.0.0"
 authors = []
 
 [addresses]
-launchpad_addr = '_'
+admin = '_'
 initial_creator_addr = "_"
 
 [dependencies]

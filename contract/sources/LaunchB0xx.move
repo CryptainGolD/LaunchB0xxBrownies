@@ -1,4 +1,4 @@
-module launchpad_addr::launchpad {
+module admin::LaunchB0xx {
     use std::option::{Self, Option};
     use std::signer;
     use std::string::{Self, String};
@@ -129,7 +129,7 @@ module launchpad_addr::launchpad {
     /// Update creator address
     public entry fun update_creator(sender: &signer, new_creator: address) acquires Config {
         let sender_addr = signer::address_of(sender);
-        let config = borrow_global_mut<Config>(@launchpad_addr);
+        let config = borrow_global_mut<Config>(@admin);
         assert!(is_admin(config, sender_addr), EONLY_ADMIN_CAN_UPDATE_CREATOR);
         config.creator_addr = new_creator;
     }
@@ -137,7 +137,7 @@ module launchpad_addr::launchpad {
     /// Set pending admin of the contract, then pending admin can call accept_admin to become admin
     public entry fun set_pending_admin(sender: &signer, new_admin: address) acquires Config {
         let sender_addr = signer::address_of(sender);
-        let config = borrow_global_mut<Config>(@launchpad_addr);
+        let config = borrow_global_mut<Config>(@admin);
         assert!(is_admin(config, sender_addr), EONLY_ADMIN_CAN_SET_PENDING_ADMIN);
         config.pending_admin_addr = option::some(new_admin);
     }
@@ -145,7 +145,7 @@ module launchpad_addr::launchpad {
     /// Accept admin of the contract
     public entry fun accept_admin(sender: &signer) acquires Config {
         let sender_addr = signer::address_of(sender);
-        let config = borrow_global_mut<Config>(@launchpad_addr);
+        let config = borrow_global_mut<Config>(@admin);
         assert!(config.pending_admin_addr == option::some(sender_addr), ENOT_PENDING_ADMIN);
         config.admin_addr = sender_addr;
         config.pending_admin_addr = option::none();
@@ -154,7 +154,7 @@ module launchpad_addr::launchpad {
     /// Update mint fee collector address
     public entry fun update_mint_fee_collector(sender: &signer, new_mint_fee_collector: address) acquires Config {
         let sender_addr = signer::address_of(sender);
-        let config = borrow_global_mut<Config>(@launchpad_addr);
+        let config = borrow_global_mut<Config>(@admin);
         assert!(is_admin(config, sender_addr), EONLY_ADMIN_CAN_UPDATE_MINT_FEE_COLLECTOR);
         config.mint_fee_collector_addr = new_mint_fee_collector;
     }
@@ -162,7 +162,7 @@ module launchpad_addr::launchpad {
     /// Update mint enabled
     public entry fun update_mint_enabled(sender: &signer, fa_obj: Object<Metadata>, enabled: bool) acquires Config, FAConfig{
         let sender_addr = signer::address_of(sender);
-        let config = borrow_global_mut<Config>(@launchpad_addr);
+        let config = borrow_global_mut<Config>(@admin);
         assert!(is_admin(config, sender_addr), EONLY_ADMIN_CAN_UPDATE_MINT_ENABLED);
         let fa_obj_addr = object::object_address(&fa_obj);
         let fa_config = borrow_global_mut<FAConfig>(fa_obj_addr);
@@ -187,10 +187,10 @@ module launchpad_addr::launchpad {
         mint_limit_per_addr: Option<u64>,
     ) acquires Registry, Config, FAController {
         let sender_addr = signer::address_of(sender);
-        let config = borrow_global<Config>(@launchpad_addr);
+        let config = borrow_global<Config>(@admin);
         assert!(is_admin(config, sender_addr) || is_creator(config, sender_addr), EONLY_ADMIN_OR_CREATOR_CAN_CREATE_FA);
 
-        let fa_owner_obj_constructor_ref = &object::create_object(@launchpad_addr);
+        let fa_owner_obj_constructor_ref = &object::create_object(@admin);
         let fa_owner_obj_signer = &object::generate_signer(fa_owner_obj_constructor_ref);
 
         let fa_obj_constructor_ref = &object::create_named_object(
@@ -240,7 +240,7 @@ module launchpad_addr::launchpad {
             fa_owner_obj,
         });
 
-        let registry = borrow_global_mut<Registry>(@launchpad_addr);
+        let registry = borrow_global_mut<Registry>(@admin);
         vector::push_back(&mut registry.fa_objects, fa_obj);
 
         event::emit(CreateFAEvent {
@@ -287,35 +287,35 @@ module launchpad_addr::launchpad {
     #[view]
     /// Get creator, creator is the address that is allowed to create FAs
     public fun get_creator(): address acquires Config {
-        let config = borrow_global<Config>(@launchpad_addr);
+        let config = borrow_global<Config>(@admin);
         config.creator_addr
     }
 
     #[view]
     /// Get contract admin
     public fun get_admin(): address acquires Config {
-        let config = borrow_global<Config>(@launchpad_addr);
+        let config = borrow_global<Config>(@admin);
         config.admin_addr
     }
 
     #[view]
     /// Get contract pending admin
     public fun get_pending_admin(): Option<address> acquires Config {
-        let config = borrow_global<Config>(@launchpad_addr);
+        let config = borrow_global<Config>(@admin);
         config.pending_admin_addr
     }
 
     #[view]
     /// Get mint fee collector address
     public fun get_mint_fee_collector(): address acquires Config {
-        let config = borrow_global<Config>(@launchpad_addr);
+        let config = borrow_global<Config>(@admin);
         config.mint_fee_collector_addr
     }
 
     #[view]
     /// Get all fungible assets created using this contract
     public fun get_registry(): vector<Object<Metadata>> acquires Registry {
-        let registry = borrow_global<Registry>(@launchpad_addr);
+        let registry = borrow_global<Registry>(@admin);
         registry.fa_objects
     }
 
@@ -383,8 +383,8 @@ module launchpad_addr::launchpad {
         if (sender == config.admin_addr) {
             true
         } else {
-            if (object::is_object(@launchpad_addr)) {
-                let obj = object::address_to_object<ObjectCore>(@launchpad_addr);
+            if (object::is_object(@admin)) {
+                let obj = object::address_to_object<ObjectCore>(@admin);
                 object::is_owner(obj, sender)
             } else {
                 false
@@ -443,7 +443,7 @@ module launchpad_addr::launchpad {
         total_mint_fee: u64
     ) acquires Config {
         if (total_mint_fee > 0) {
-            let config = borrow_global<Config>(@launchpad_addr);
+            let config = borrow_global<Config>(@admin);
             aptos_account::transfer(sender, config.mint_fee_collector_addr, total_mint_fee)
         }
     }
